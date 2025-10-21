@@ -1,0 +1,266 @@
+/* ============================================================
+   🌌 NexusBoard - Board View (Animated Workspace)
+   ============================================================ */
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #001219, #002a3a, #013a42, #014f56);
+  background-size: 400% 400%;
+  animation: bgFlow 20s ease infinite;
+  color: #e6ffff;
+}
+
+@keyframes bgFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== Navbar ===== */
+.topbar {
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,255,255,0.3);
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar .container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  color: #00ffff;
+  font-size: 22px;
+  font-weight: 600;
+  text-shadow: 0 0 12px #00ffff;
+}
+
+.actions a {
+  color: #00ffff;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: 0.3s;
+  background: rgba(255,255,255,0.05);
+}
+
+.actions a:hover {
+  box-shadow: 0 0 15px #00ffff;
+  transform: scale(1.05);
+}
+
+/* ===== Team Members ===== */
+.members-bar {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 0 15px rgba(0,255,255,0.1);
+  animation: fadeIn 1s ease;
+}
+
+.members-bar h3 {
+  color: #00ffff;
+  text-shadow: 0 0 12px #00ffff;
+  margin-bottom: 10px;
+}
+
+.members-list {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.member-tag {
+  background: linear-gradient(90deg, #00ffff, #00b4d8);
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: #001219;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(0,255,255,0.3);
+  animation: floatTag 4s ease-in-out infinite;
+}
+
+@keyframes floatTag {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ===== Task Cards ===== */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.task-card {
+  background: rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 15px;
+  transition: 0.3s;
+  box-shadow: 0 0 15px rgba(0,255,255,0.1);
+  border: 1px solid rgba(0,255,255,0.1);
+}
+
+.task-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
+}
+
+.task-card h4 {
+  color: #00ffff;
+  margin-bottom: 8px;
+}
+
+.task-card p {
+  font-size: 13px;
+  color: #c9ffff;
+}
+
+.task-card small {
+  font-size: 12px;
+  color: #89e0e0;
+}
+
+.comments {
+  font-style: italic;
+  color: #aeeeee;
+}
+
+.task-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.task-actions .btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn.edit {
+  background: linear-gradient(90deg, #00ffff, #0072ff);
+  color: #001219;
+  font-weight: 600;
+}
+
+.btn.delete {
+  background: linear-gradient(90deg, #ff4b2b, #ff9068);
+  color: white;
+}
+
+.btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px currentColor;
+}
+
+/* ===== Create Task ===== */
+.create-task {
+  margin-top: 50px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+}
+
+.create-task h3 {
+  color: #00ffff;
+  text-shadow: 0 0 12px #00ffff;
+  margin-bottom: 10px;
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-form label {
+  font-size: 13px;
+  color: #bff9ff;
+}
+
+/* Inputs and textareas */
+.task-form input,
+.task-form textarea {
+  width: 60%;
+  padding: 6px 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  transition: 0.3s;
+}
+
+/* === FIX: Select Dropdown Styling === */
+.task-form select {
+  width: 60%;
+  padding: 6px 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.2);
+  color: #001219;
+  font-weight: 600;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.task-form select:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.task-form select option {
+  background: #002a3a;
+  color: #00ffff;
+  font-weight: 500;
+}
+
+/* Focus effects */
+.task-form input:focus,
+.task-form textarea:focus,
+.task-form select:focus {
+  background: rgba(255,255,255,0.3);
+  box-shadow: 0 0 10px #00ffff;
+  outline: none;
+  color: #001219;
+}
+
+/* Create Task Button */
+.task-form button {
+  width: 25%;
+  align-self: center;
+  padding: 8px;
+  font-size: 12px;
+  color: #001219;
+  background: linear-gradient(90deg, #00ffff, #0072ff);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.task-form button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px #00ffff;
+}

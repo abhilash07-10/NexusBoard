@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">NexusBoard</div>
+      <div class="actions">
+        <span>Hello, {{ user.username }}</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Boards You Created</h2>
+    {% if owned_boards %}
+      <div class="board-container">
+        {% for b in owned_boards %}
+          <div class="board-card">
+            <h3>{{ b.name }}</h3>
+            <p>{{ b.description or 'No description' }}</p>
+            <small>Code: {{ b.board_code }} • Created: {{ b.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+            <div class="board-actions">
+              <a href="{{ url_for('board_view', board_id=b.id) }}">Open</a> |
+              <a href="{{ url_for('edit_board', board_id=b.id) }}">Edit</a> |
+              <a href="{{ url_for('delete_board', board_id=b.id) }}" onclick="return confirm('Delete this board?')">Delete</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No boards created yet.</p>
+    {% endif %}
+
+    <h2>Boards You Joined</h2>
+    {% if joined_boards %}
+      <div class="board-container">
+        {% for b in joined_boards %}
+          <div class="board-card">
+            <h3>{{ b.name }}</h3>
+            <p>{{ b.description or 'No description' }}</p>
+            <small>Owner: {{ b.owner_name }} • Created: {{ b.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+            <div class="board-actions">
+              <a href="{{ url_for('board_view', board_id=b.id) }}">Open</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>You haven't joined any boards yet.</p>
+    {% endif %}
+
+    <hr>
+
+<div class="forms-section">
+  <!-- Left Side: Create Board -->
+  <div class="create-board">
+    <h3>Create Board</h3>
+    <form method="POST" action="{{ url_for('add_board') }}" class="auth-form">
+      <label>Name</label>
+      <input name="name" required>
+      <label>Description (optional)</label>
+      <input name="description">
+      <button type="submit">Create</button>
+    </form>
+  </div>
+
+  <!-- Right Side: Join Board -->
+  <div class="create-board">
+    <h3>Join Board</h3>
+    <form method="POST" action="{{ url_for('join_board') }}" class="auth-form">
+      <label>Board Code</label>
+      <input name="board_code" placeholder="e.g. NXBAB12" required>
+      <button type="submit">Join</button>
+    </form>
+  </div>
+</div>
+
+  </main>
+</body>
+</html>

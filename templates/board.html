@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ board.name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='board.css') }}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">NexusBoard</div>
+      <div class="actions">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <span>Hello, {{ user.username }}</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Team Members -->
+    <section class="members-bar">
+      <h3>👥 Team Members</h3>
+      <div class="team-info">
+        <span class="head">Team Head: {{ board.owner_name }}</span>
+        <div class="members-list">
+          {% for m in members %}
+            <span class="member-tag">{{ m.username }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Tasks Section (Top) -->
+    <section class="tasks-section">
+      <h2>Tasks in {{ board.name }}</h2>
+      {% if tasks %}
+        <div class="task-grid">
+          {% for t in tasks %}
+            <div class="task-card">
+              <h4>{{ t.name }}</h4>
+              <p>{{ t.description or 'No description provided.' }}</p>
+              <p><strong>Assigned:</strong> {{ t.assigned_name or 'Unassigned' }}</p>
+              <small>Created: {{ t.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+              {% if t.due_date %}
+                <small> • Due: {{ t.due_date.strftime('%Y-%m-%d %H:%M') }}</small>
+              {% endif %}
+              <p class="comments">{{ (t.comments[:120] + '...') if t.comments and t.comments|length>120 else (t.comments or '') }}</p>
+              <div class="task-actions">
+                <a href="{{ url_for('edit_task', task_id=t.id) }}" class="btn edit">Edit</a>
+                <a href="{{ url_for('delete_task', task_id=t.id) }}" class="btn delete" onclick="return confirm('Delete task?')">Delete</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="no-tasks">No tasks yet. Start by creating one below.</p>
+      {% endif %}
+    </section>
+
+    <!-- Create Task (Bottom) -->
+    <section class="create-task">
+      <h3>📝 Create New Task</h3>
+      <form method="POST" action="{{ url_for('add_task', board_id=board.id) }}" class="task-form">
+        <label>Task Name</label>
+        <input type="text" name="name" required>
+        <label>Description</label>
+        <textarea name="description"></textarea>
+        <label>Assign To</label>
+        <select name="assigned_to">
+          <option value="">-- Select Member --</option>
+          {% for m in members %}
+            <option value="{{ m.id }}">{{ m.username }}</option>
+          {% endfor %}
+        </select>
+        <label>Comments</label>
+        <textarea name="comments"></textarea>
+        <label>End Date</label>
+        <input type="datetime-local" name="due_date">
+        <button type="submit">Create Task</button>
+      </form>
+    </section>
+
+  </main>
+</body>
+</html>

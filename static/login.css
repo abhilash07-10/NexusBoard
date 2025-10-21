@@ -1,0 +1,268 @@
+/* ✨ Advanced Animated Login/Register Page – NexusBoard */
+
+/* ===== Background with Animated Gradient Motion ===== */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg, #00111a, #002b36, #013a42, #005f73, #0a9396);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+  color: #ccecff;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== Floating Particles ===== */
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: floatParticle 10s infinite ease-in-out alternate;
+}
+.particle:nth-child(1) { width: 15px; height: 15px; top: 10%; left: 15%; animation-delay: 0s; }
+.particle:nth-child(2) { width: 10px; height: 10px; bottom: 20%; right: 20%; animation-delay: 2s; }
+.particle:nth-child(3) { width: 25px; height: 25px; top: 30%; right: 10%; animation-delay: 4s; }
+.particle:nth-child(4) { width: 12px; height: 12px; bottom: 15%; left: 25%; animation-delay: 6s; }
+
+@keyframes floatParticle {
+  0% { transform: translateY(0) rotate(0); opacity: 0.7; }
+  50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+  100% { transform: translateY(0) rotate(360deg); opacity: 0.6; }
+}
+
+/* ===== Login/Register Glass Box ===== */
+.auth-container {
+  position: relative;
+  width: 320px;
+  padding: 30px 25px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+  text-align: center;
+  color: white;
+  animation: fadeIn 1.5s ease forwards;
+  transform: scale(0.95);
+  transition: transform 0.4s ease;
+}
+.auth-container:hover {
+  transform: scale(1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Logo Animation ===== */
+.logo {
+  font-size: 32px;
+  font-weight: 700;
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+  animation: glowPulse 3s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { text-shadow: 0 0 8px #00ffff; }
+  to { text-shadow: 0 0 25px #00e0ff; }
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #cceeff;
+}
+
+/* ===== Input Fields ===== */
+.auth-form label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: #bff9ff;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 7px;
+  font-size: 13px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  margin-bottom: 14px;
+  transition: 0.3s ease;
+}
+
+.auth-form input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 12px #00ffff;
+  transform: scale(1.05);
+}
+
+/* ===== Buttons ===== */
+.auth-form button {
+  width: 100%;
+  padding: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #00ffff, #0072ff);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.auth-form button:hover {
+  transform: scale(1.0);
+  box-shadow: 0 0 25px #00ffff;
+}
+
+/* ===== Animated Link (Register/Login link) ===== */
+.auth-container p {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #ccecff;
+  position: relative;
+  animation: slideUpFade 2s ease-in-out infinite alternate;
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0.7; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(-3px); }
+}
+
+.auth-container a {
+  color: #00ffff;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 5px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.auth-container a:hover {
+  text-shadow: 0 0 10px #00ffff;
+  transform: scale(1.1);
+}
+
+.auth-container a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #00ffff, #0072ff);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.auth-container a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ===== Floating Neon Circles ===== */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.2);
+  filter: blur(15px);
+  animation: floatCircle 8s infinite ease-in-out alternate;
+}
+
+.circle.one { width: 100px; height: 100px; top: -40px; left: -40px; }
+.circle.two { width: 130px; height: 130px; bottom: -40px; right: -40px; animation-delay: 2s; }
+
+@keyframes floatCircle {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -20px); }
+  100% { transform: translate(-20px, 20px); }
+}
+
+/* ===== Error & Success Messages ===== */
+.error-message {
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.success-message {
+  color: #2fffaa;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+/* ===== Bottom Text Styling (Register / Login Link) ===== */
+.bottom-text {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 13px;
+  color: #ccecff;
+  animation: fadeUp 1.5s ease-in-out forwards;
+  text-align: center;
+  opacity: 0;
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bottom-text a {
+  color: #00ffff;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  margin-left: 4px;
+  transition: all 0.3s ease;
+}
+
+.bottom-text a:hover {
+  color: #66fcf1;
+  text-shadow: 0 0 10px #00ffff;
+  transform: scale(1.05);
+}
+
+.bottom-text a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #00ffff, #0072ff);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.bottom-text a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
