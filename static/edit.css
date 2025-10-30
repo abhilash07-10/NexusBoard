@@ -1,37 +1,36 @@
 /* ============================================================
-   ✨ NexusBoard - Edit Page Styling (Boards & Tasks)
-   Unified Cyan-Blue Theme + Animated Back Link
+   🌿 NexusBoard - Edit Page Styling (Boards & Tasks)
+   Unified Mint–Teal Theme with Smooth Animations
    ============================================================ */
 
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
-  background: radial-gradient(circle at top right, #001219, #002a3a, #013a42, #014f56);
-  background-size: 400% 400%;
-  animation: bgFlow 25s ease infinite;
-  color: #e0ffff;
+  background: linear-gradient(135deg, #e0f7f4, #d0faf6, #f5fffe);
+  color: #1e3a3a;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding-top: 80px;
+  animation: bgFade 20s ease infinite alternate;
 }
 
-@keyframes bgFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes bgFade {
+  0% { background-position: left; }
+  100% { background-position: right; }
 }
 
 /* ===== Container Card ===== */
 .edit-container {
-  background: rgba(255, 255, 255, 0.08);
+  background: #ffffffcc;
   backdrop-filter: blur(12px);
   border-radius: 16px;
   width: 420px;
-  padding: 30px 35px;
-  box-shadow: 0 0 25px rgba(0,255,255,0.1);
+  padding: 32px 35px;
+  box-shadow: 0 0 25px rgba(0, 150, 136, 0.25);
   animation: floatUp 1s ease;
+  border: 1px solid #cde8e8;
 }
 
 @keyframes floatUp {
@@ -41,8 +40,8 @@ body {
 
 .edit-container h2 {
   text-align: center;
-  color: #00ffff;
-  text-shadow: 0 0 12px #00ffff;
+  color: #00796b;
+  text-shadow: 0 0 8px rgba(0, 128, 128, 0.2);
   margin-bottom: 20px;
 }
 
@@ -55,17 +54,17 @@ body {
 
 .edit-form label {
   font-size: 13px;
-  color: #bff9ff;
-  letter-spacing: 0.5px;
+  color: #1e3a3a;
+  letter-spacing: 0.4px;
 }
 
 .edit-form input,
 .edit-form textarea,
 .edit-form select {
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
+  background: #f5fffe;
+  border: 1px solid #cde8e8;
   border-radius: 8px;
-  color: #fff;
+  color: #1e3a3a;
   padding: 8px 10px;
   font-size: 13px;
   transition: 0.3s ease;
@@ -80,14 +79,25 @@ body {
 .edit-form textarea:focus,
 .edit-form select:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 12px #00ffff;
+  border-color: #26a69a;
+  box-shadow: 0 0 10px rgba(38, 166, 154, 0.25);
+  background: #e0f7f4;
+}
+
+/* ===== Dropdown ===== */
+.edit-form select {
+  background-color: #f5fffe;
+  color: #1e3a3a;
+}
+.edit-form select option {
+  background-color: #ffffff;
+  color: #1e3a3a;
 }
 
 /* ===== Save Button ===== */
 .edit-form button {
-  background: linear-gradient(90deg, #00ffff, #0072ff);
-  color: #001219;
+  background: linear-gradient(90deg, #009688, #4db6ac);
+  color: #ffffff;
   font-weight: 600;
   font-size: 14px;
   border: none;
@@ -96,13 +106,14 @@ body {
   margin-top: 10px;
   cursor: pointer;
   transition: 0.3s;
-  letter-spacing: 1px;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .edit-form button:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px #00ffff;
+  box-shadow: 0 0 15px rgba(0, 150, 136, 0.4);
+  background: linear-gradient(90deg, #4db6ac, #00796b);
 }
 
 /* ===== Cancel / Back Link ===== */
@@ -118,12 +129,13 @@ body {
 }
 
 .cancel-link a {
-  color: #00ffff;
+  color: #00796b;
   text-decoration: none;
   font-size: 13px;
-  transition: 0.4s;
+  transition: 0.3s;
   position: relative;
   display: inline-block;
+  font-weight: 500;
 }
 
 .cancel-link a::after {
@@ -133,8 +145,8 @@ body {
   left: 0;
   width: 0%;
   height: 1px;
-  background: #00ffff;
-  transition: 0.4s;
+  background: #009688;
+  transition: 0.3s;
 }
 
 .cancel-link a:hover::after {
@@ -142,57 +154,41 @@ body {
 }
 
 .cancel-link a:hover {
-  text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+  text-shadow: 0 0 8px #4db6ac;
   transform: scale(1.05);
 }
 
-/* ===== Subtle Glow Animation ===== */
-@keyframes glowPulse {
-  from { text-shadow: 0 0 10px #00ffff; }
-  to { text-shadow: 0 0 25px #00e0ff; }
-}
-
+/* ===== Bottom Note ===== */
 .bottom-text {
   margin-top: 20px;
   padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid #cde8e8;
   font-size: 13px;
-  color: #ccecff;
-  animation: fadeUp 1.5s ease-in-out forwards;
+  color: #1e3a3a;
   text-align: center;
   opacity: 0;
-  animation-delay: 0.4s;
+  animation: fadeUp 1.4s ease-in-out forwards;
+  animation-delay: 0.3s;
 }
 
 .bottom-text a {
-  color: #00ffff;
+  color: #00796b;
   font-weight: 600;
   text-decoration: none;
-  position: relative;
   margin-left: 4px;
   transition: all 0.3s ease;
 }
 
 .bottom-text a:hover {
-  color: #66fcf1;
-  text-shadow: 0 0 10px #00ffff;
+  color: #009688;
+  text-shadow: 0 0 8px #4db6ac;
   transform: scale(1.05);
 }
 
-.bottom-text a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, #00ffff, #0072ff);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.bottom-text a:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  .edit-container {
+    width: 90%;
+    padding: 25px 20px;
+  }
 }

@@ -24,6 +24,10 @@
       </select>
       <label>Comments</label><textarea name="comments">{{ task.comments }}</textarea>
       <label>Due Date</label><input name="due_date" value="{{ task.due_date.strftime('%Y-%m-%dT%H:%M') if task.due_date else '' }}">
+      <label>Progress %</label>
+      <input type="range" name="progress_percent" min="0" max="100"
+        value="{{ task.progress_percent or 0 }}" oninput="this.nextElementSibling.innerText=this.value+'%'">
+      <span>{{ task.progress_percent or 0 }}%</span>
       <button type="submit">Save</button>
     </form>
     <p class="bottom-text"><a href="{{ url_for('board_view', board_id=task.board_id) }}">Back to Board</a></p>

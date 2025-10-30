@@ -34,3 +34,28 @@ CREATE TABLE IF NOT EXISTS tasks (
   due_date TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE tasks
+ADD COLUMN IF NOT EXISTS position INTEGER DEFAULT 0;
+
+WITH ordered AS (
+  SELECT id, ROW_NUMBER() OVER (PARTITION BY board_id ORDER BY created_at, id) AS rn
+  FROM tasks
+)
+UPDATE tasks
+SET position = ordered.rn
+FROM ordered
+WHERE tasks.id = ordered.id;
+
+select * from tasks;
+
+ALTER TABLE tasks
+ADD COLUMN IF NOT EXISTS progress_percent INTEGER DEFAULT 0;
+
+CREATE TABLE IF NOT EXISTS history (
+  id SERIAL PRIMARY KEY,
+  board_id INTEGER REFERENCES boards(id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+  action TEXT NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NexusBoard | Login & Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+  <div class="container {% if mode == 'register' %}active{% endif %}">
+    <div class="curved-shape"></div>
+    <div class="curved-shape2"></div>
+
+    <!-- Login Form -->
+    <div class="form-box login">
+      <h2>Login</h2>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for c, m in messages %}
+          <p class="{{ c }}">{{ m }}</p>
+        {% endfor %}
+      {% endwith %}
+      <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+        <div class="input-box">
+          <input type="email" name="email" id="loginEmail" required>
+          <label>Email</label>
+        </div>
+        <div class="input-box">
+          <input type="password" name="password" required>
+          <label>Password</label>
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <div class="regi-link">
+          <p>Don’t have an account? <a href="{{ url_for('register') }}">Register</a></p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Register Form -->
+    <div class="form-box register">
+      <h2>Register</h2>
+      <form id="registerForm" method="POST" action="{{ url_for('register') }}">
+        <div class="input-box">
+          <input type="text" name="username" required>
+          <label>Username</label>
+        </div>
+        <div class="input-box">
+          <input type="email" name="email" id="registerEmail" required>
+          <label>Email</label>
+        </div>
+        <div class="input-box">
+          <input type="password" name="password" required>
+          <label>Password</label>
+        </div>
+        <button type="submit" class="btn">Register</button>
+        <div class="regi-link">
+          <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Info Panels -->
+    <div class="info-content login">
+      <h2>Welcome Back!</h2>
+      <p>We’re glad to have you back. Continue managing your boards efficiently.</p>
+    </div>
+
+    <div class="info-content register">
+      <h2>Join NexusBoard!</h2>
+      <p>Organize your projects, collaborate with teams, and achieve more together.</p>
+    </div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.container');
+    const links = document.querySelectorAll('.regi-link a');
+
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        container.classList.toggle('active');
+      });
+    });
+
+    // ✅ Custom Email Validation for Gmail-style addresses
+    function validateGmail(email) {
+      const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      return gmailPattern.test(email);
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      const email = document.getElementById('registerEmail').value.trim();
+      if (!validateGmail(email)) {
+        e.preventDefault();
+        alert('Please enter a valid Gmail address (e.g., example@gmail.com)');
+      }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      const email = document.getElementById('loginEmail').value.trim();
+      if (!validateGmail(email)) {
+        e.preventDefault();
+        alert('Please enter a valid Gmail address (e.g., example@gmail.com)');
+      }
+    });
+  </script>
+</body>
+</html>

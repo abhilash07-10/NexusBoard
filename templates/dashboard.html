@@ -1,86 +1,138 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard | NexusBoard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+  <script defer>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.querySelector('.overlay').classList.toggle('show');
+    }
+
+    function showSection(id, el) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      toggleSidebar();
+      // save the selected section
+      localStorage.setItem('lastDashboardSection', id);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedSection = localStorage.getItem('lastDashboardSection');
+      if (savedSection && document.getElementById(savedSection)) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.getElementById(savedSection).classList.add('active');
+        document.querySelectorAll('.sidebar a').forEach(a => {
+          if (a.getAttribute('onclick')?.includes(savedSection)) a.classList.add('active');
+        });
+      }
+    });
+  </script>
 </head>
 <body>
+
+  <div class="overlay" onclick="toggleSidebar()"></div>
+
   <header class="topbar">
-    <div class="container">
+    <div class="brand-area">
+      <div class="hamburger" onclick="toggleSidebar()">☰</div>
       <div class="brand">NexusBoard</div>
-      <div class="actions">
-        <span>Hello, {{ user.username }}</span>
-        <a href="{{ url_for('logout') }}">Logout</a>
-      </div>
+    </div>
+    <div class="actions">
+      <span>👋 Hello, <b>{{ user.username }}</b></span>
+      <a href="{{ url_for('logout') }}">Logout</a>
     </div>
   </header>
 
-  <main class="container">
-    <h2>Boards You Created</h2>
-    {% if owned_boards %}
-      <div class="board-container">
-        {% for b in owned_boards %}
-          <div class="board-card">
-            <h3>{{ b.name }}</h3>
-            <p>{{ b.description or 'No description' }}</p>
-            <small>Code: {{ b.board_code }} • Created: {{ b.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
-            <div class="board-actions">
-              <a href="{{ url_for('board_view', board_id=b.id) }}">Open</a> |
-              <a href="{{ url_for('edit_board', board_id=b.id) }}">Edit</a> |
-              <a href="{{ url_for('delete_board', board_id=b.id) }}" onclick="return confirm('Delete this board?')">Delete</a>
-            </div>
-          </div>
-        {% endfor %}
+  <nav id="sidebar" class="sidebar">
+    <div class="sidebar-header">⚡ Menu</div>
+    <ul>
+      <li><a href="#" class="active" onclick="showSection('home', this)">🏠 Profile</a></li>
+      <li><a href="#" onclick="showSection('created', this)">📋 Boards You Created</a></li>
+      <li><a href="#" onclick="showSection('joined', this)">🤝 Boards You Joined</a></li>
+      <li><a href="#" onclick="showSection('create', this)">➕ Create Board</a></li>
+      <li><a href="#" onclick="showSection('join', this)">🔑 Join Board</a></li>
+      <li><a href="{{ url_for('logout') }}">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+    <section id="home" class="active">
+      <div class="welcome">
+        <h1>Welcome, {{ user.username }} 🌟</h1>
+        <p>"Stay consistent. Small progress every day leads to big results."</p>
       </div>
-    {% else %}
-      <p>No boards created yet.</p>
-    {% endif %}
+    </section>
 
-    <h2>Boards You Joined</h2>
-    {% if joined_boards %}
-      <div class="board-container">
-        {% for b in joined_boards %}
-          <div class="board-card">
-            <h3>{{ b.name }}</h3>
-            <p>{{ b.description or 'No description' }}</p>
-            <small>Owner: {{ b.owner_name }} • Created: {{ b.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
-            <div class="board-actions">
-              <a href="{{ url_for('board_view', board_id=b.id) }}">Open</a>
+    <section id="created">
+      <h2>📋 Boards You Created</h2>
+      {% if owned_boards %}
+        <div class="board-container">
+          {% for b in owned_boards %}
+            <div class="board-card">
+              <h3>{{ b.name }}</h3>
+              <p>{{ b.description or 'No description' }}</p>
+              <small>Code: {{ b.board_code }} • Created: {{ b.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+              <div class="board-actions">
+                <a href="{{ url_for('board_view', board_id=b.id) }}">Open</a> |
+                <a href="{{ url_for('edit_board', board_id=b.id) }}">Edit</a> |
+                <a href="{{ url_for('delete_board', board_id=b.id) }}" onclick="return confirm('Delete this board?')">Delete</a>
+              </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No boards created yet.</p>
+      {% endif %}
+    </section>
+
+    <section id="joined">
+      <h2>🤝 Boards You Joined</h2>
+      {% if joined_boards %}
+        <div class="board-container">
+          {% for b in joined_boards %}
+            <div class="board-card">
+              <h3>{{ b.name }}</h3>
+              <p>{{ b.description or 'No description' }}</p>
+              <small>Owner: {{ b.owner_name }} • Created: {{ b.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+              <div class="board-actions">
+                <a href="{{ url_for('board_view', board_id=b.id) }}">Open</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>You haven’t joined any boards yet.</p>
+      {% endif %}
+    </section>
+
+    <section id="create">
+      <div class="create-board">
+        <h3>✨ Create New Board</h3>
+        <form method="POST" action="{{ url_for('add_board') }}" class="auth-form">
+          <label>Name</label>
+          <input name="name" required>
+          <label>Description</label>
+          <input name="description">
+          <button type="submit">Create</button>
+        </form>
       </div>
-    {% else %}
-      <p>You haven't joined any boards yet.</p>
-    {% endif %}
+    </section>
 
-    <hr>
-
-<div class="forms-section">
-  <!-- Left Side: Create Board -->
-  <div class="create-board">
-    <h3>Create Board</h3>
-    <form method="POST" action="{{ url_for('add_board') }}" class="auth-form">
-      <label>Name</label>
-      <input name="name" required>
-      <label>Description (optional)</label>
-      <input name="description">
-      <button type="submit">Create</button>
-    </form>
-  </div>
-
-  <!-- Right Side: Join Board -->
-  <div class="create-board">
-    <h3>Join Board</h3>
-    <form method="POST" action="{{ url_for('join_board') }}" class="auth-form">
-      <label>Board Code</label>
-      <input name="board_code" placeholder="e.g. NXBAB12" required>
-      <button type="submit">Join</button>
-    </form>
-  </div>
-</div>
-
+    <section id="join">
+      <div class="create-board">
+        <h3>🔑 Join a Board</h3>
+        <form method="POST" action="{{ url_for('join_board') }}" class="auth-form">
+          <label>Board Code</label>
+          <input name="board_code" placeholder="e.g. NXBAB12" required>
+          <button type="submit">Join</button>
+        </form>
+      </div>
+    </section>
   </main>
 </body>
 </html>

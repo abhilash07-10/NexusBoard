@@ -1,0 +1,9 @@
+{% for log in logs %}
+  <div class="history-item">
+    <span>{{ log.username or 'Unknown' }}</span> — {{ log.action }}
+    <small>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+    <button class="delete-history" data-id="{{ log.id }}" style="float:right;background:#ff4b5c;color:white;border:none;padding:3px 6px;border-radius:6px;cursor:pointer;">Delete</button>
+  </div>
+{% else %}
+  <p>No history records yet.</p>
+{% endfor %}
